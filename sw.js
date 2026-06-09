@@ -3,8 +3,8 @@ const CACHE_NAME = "app-cache-v1";
 const FILES = [
   "./",
   "./index.html",
-  "./app.js",
-  "./styles.css",
+  "./clientSide.js",
+  "./serverSide.js",
   "./manifest.json",
   "./build.txt", 
   "./icon.png"
