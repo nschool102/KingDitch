@@ -6,44 +6,108 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#1a1a2e">
+    <link rel="stylesheet" href="./styles.css">
     <link rel="manifest" href="./manifest.json">
     <link rel="apple-touch-icon" href="./icon.png">
-    <title>King Dịtch</title>
-    <style>
-        :root { --bg: #0f0f1a; --surface: #1a1a2e; --accent: #6c63ff; --text: #f0f0ff; --text3: #6666aa; --border: rgba(108,99,255,0.2); }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: var(--bg); color: var(--text); font-family: -apple-system, sans-serif; height: 100vh; display: flex; flex-direction: column; }
-        .hdr { background: var(--surface); padding: 20px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
-        .tabs-wrap { background: var(--surface); border-bottom: 1px solid var(--border); padding: 5px; }
-        .tabs { display: flex; gap: 5px; overflow-x: auto; }
-        .tab { padding: 10px; cursor: pointer; color: var(--text3); font-size: 13px; white-space: nowrap; }
-        .tab.active { color: var(--accent); border-bottom: 2px solid var(--accent); }
-        .content { flex: 1; overflow-y: auto; padding: 16px; }
-        .panel { display: none; }
-        .panel.active { display: block; }
-        footer { padding: 10px; text-align: center; font-size: 10px; color: #21ff00; }
-    </style>
+    <title>Đồ chơi</title>
 </head>
 <body>
-
-<div class="hdr">
-    <h1>King Dịtch</h1>
-</div>
 
 <div class="tabs-wrap">
     <div class="tabs">
         <div class="tab active" data-tab="maihoa">🌸 Mai Hoa</div>
-        <div class="tab" data-tab="luchao">☷ Lục Hào</div>
-        <div class="tab" data-tab="fullcustom">⚙️ Full Custom</div>
+        <div class="tab" data-tab="fullcustom">☷ Full custom</div>
+        <div class="tab" data-tab="tarot">🔮 Tarot</div>
         <div class="tab" data-tab="decision">🎡 Decision</div>
     </div>
 </div>
 
 <div class="content">
     <div class="panel active" id="maihoa-container"></div>
-    <div class="panel" id="luchao-container"></div>
     <div class="panel" id="fullcustom-container">
+        <div id="form-area">
+            <!-- SECTION 1: THOI GIAN -->
+              <div class="section-box">
+                <div class="section-title">THỜI GIAN</div>
+                <label class="checkbox-line">
+                  <input type="checkbox" id="fc-now">
+                  Bây giờ
+                </label>
+                <div class="time-grid">
+                  <select id="fc-hour">
+                    
+                  </select>
+                  <select id="fc-day"></select>
+                  <select id="fc-month"></select>
+                  <select id="fc-year"></select>
+                </div>
+              </div>
+
+              <!-- SECTION 2: PHUONG PHAP -->
+              <div class="section-box">
+                <div class="section-title">PHƯƠNG PHÁP LẬP QUẺ</div>
+                <select id="fc-method">
+                  <option value="MaiHoa">Mai Hoa</option>
+                  <option value="LucHao">Lục Hào</option>
+                </select>
+              </div>
+
+              <!-- SECTION 3: LUC HAO -->
+              <div class="section-box" id="lucHaoBox" style="display:none;">
+                <div class="section-title">QUẺ LỤC HÀO</div>
+                    <div class="double-grid">
+                      <div>
+                        <label>Quái Thượng</label>
+                        <select id="fc-up">
+                          <option value="111">1. Càn Thiên</option>
+                          <option value="110">2. Đoài Trạch</option>
+                          <option value="101">3. Li Hỏa</option>
+                          <option value="100">4. Chấn Lôi</option>
+                          <option value="011">5. Tốn Phong</option>
+                          <option value="010">6. Khảm Thủy</option>
+                          <option value="001">7. Cấn Sơn</option>
+                          <option value="000">8. Khôn Địa</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label>Quái Hạ</label>
+                        <select id="fc-down">
+                          <option value="111">1. Càn Thiên</option>
+                          <option value="110">2. Đoài Trạch</option>
+                          <option value="101">3. Li Hỏa</option>
+                          <option value="100">4. Chấn Lôi</option>
+                          <option value="011">5. Tốn Phong</option>
+                          <option value="010">6. Khảm Thủy</option>
+                          <option value="001">7. Cấn Sơn</option>
+                          <option value="000">8. Khôn Địa</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="hao-grid">
+                      <label><input type="checkbox" class="hao-cb" value="1"> Hào 1</label>
+                      <label><input type="checkbox" class="hao-cb" value="2"> Hào 2</label>
+                      <label><input type="checkbox" class="hao-cb" value="3"> Hào 3</label>
+                      <label><input type="checkbox" class="hao-cb" value="4"> Hào 4</label>
+                      <label><input type="checkbox" class="hao-cb" value="5"> Hào 5</label>
+                      <label><input type="checkbox" class="hao-cb" value="6"> Hào 6</label>
+                    </div>
+
+                    <button class="submit-btn" id="btnLucHao">Submit Quẻ Lục Hào</button>
+                </div>
+
+                <!-- SECTION 4: MAI HOA -->
+                <div class="section-box" id="maiHoaBox">
+                    <div class="section-title">QUẺ MAI HOA</div>
+                    <button class="submit-btn" id="btnMaiHoa">Submit Quẻ Mai Hoa</button>
+                </div>
+            </div>
+            <!-- SECTION 5: RESULT -->
+                <div id="custom-container"></div>
         </div>
+
+    </div>
+    <div class="panel" id="tarot-container"></div>
     <div class="panel" id="decision-container"></div>
 </div>
 
@@ -54,16 +118,20 @@
 
 <script>
     // Xử lý chuyển tab
-    document.querySelectorAll('.tab').forEach(t => {
-        t.addEventListener('click', () => {
-            // Cập nhật giao diện tab
-            document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
-            t.classList.add('active');
-            
-            // Gọi hàm logic switchTab đã định nghĩa trong clientSide.js
-            switchTab(t.dataset.tab);
+    // Thay thế đoạn script xử lý tab trong index.html bằng đoạn này:
+        document.querySelectorAll('.tab').forEach(t => {
+            t.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+                document.querySelectorAll('.panel').forEach(x => x.classList.remove('active'));
+                t.classList.add('active');
+                
+                const tabName = t.dataset.tab;
+                document.getElementById(tabName + '-container').classList.add('active');
+                
+                // Gọi hàm switchTab tương ứng
+                switchTab(tabName);
+            });
         });
-    });
 
     // Load build info từ file txt
     fetch('./build.txt?ts=' + Date.now())
