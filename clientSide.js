@@ -13,20 +13,30 @@ function getColor(s) {
 }
 
 function createQueLayout(targetId) {
+    // Luôn render vào div con có id="result-display" để không mất form
     const container = document.getElementById(targetId);
-    if (!container) return;
-    container.innerHTML = `
+    let display = container.querySelector('#result-display');
+    if (!display) {
+        display = document.createElement('div');
+        display.id = 'result-display';
+        container.appendChild(display);
+    }
+    
+    display.innerHTML = `
         <div class="app">
             <div class="header-info"></div>
             <div class="header" id="headerBox"></div>
             <table class="table" id="table"></table>
             <div style="display:flex; justify-content:flex-end; margin-top:10px;">
-                <button class="btn-copy" style="padding:8px 14px; border:none; border-radius:8px; background:#1976d2; color:white; cursor:pointer; font-weight:bold;">📋 Copy Text</button>
+                <button class="btn-copy" style="padding:8px 14px; border:none; border-radius:8px; background:#1976d2; color:white; cursor:pointer;">📋 Copy</button>
             </div>
-            <textarea class="textResult" rows="10" readonly></textarea>
+            <textarea class="textResult" rows="5" readonly></textarea>
         </div>
     `;
-    container.querySelector('.btn-copy').addEventListener('click', () => copyTextResult(targetId));
+    display.querySelector('.btn-copy').onclick = () => {
+        navigator.clipboard.writeText(display.querySelector('.textResult').value);
+        alert("✅ Đã copy!");
+    };
 }
 
 function renderBox(q) {
@@ -48,9 +58,9 @@ function renderBox(q) {
     `;
 }
 
-function renderResult(res, containerId) {
-    if (!res || !res.data) return;
+function renderResult(res, containerId = "result-display") {
     const container = document.getElementById(containerId);
+    if (!res || !res.data) return;
     if (!container) return;
 
     const info = container.querySelector(".header-info");
@@ -101,27 +111,88 @@ function copyTextResult(containerId) {
 
 function switchTab(pageName) {
     const containerId = `${pageName}-container`;
-    if (pageName === "maihoa") {
+    // Ẩn tất cả panels
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    // Hiển thị panel được chọn
+    const container = document.getElementById(containerId);
+    if(container) container.classList.add('active');
+
+    if (pageName === "fullcustom") {
+        // Gọi hàm khởi tạo các sự kiện cho form có sẵn trong HTML
+        initFullCustom();
+    } else if (pageName === "maihoa") {
         createQueLayout(containerId);
-        const data = RUN_QUE_FULL("MaiHoa", null);
-        data.reverseOrder = true;
-        renderResult(data, containerId);
-    } else if (pageName === "fullcustom") {
-        if (typeof initFullCustom === "function") initFullCustom();
+        renderResult(RUN_QUE_FULL("MaiHoa", null), containerId);
     }
 }
+/*
+function switchTab(pageName) {
+    const containerId = `${pageName}-container`;
+    const container = document.getElementById(containerId);
+    if (!container) return;
 
+    switch(pageName) {
+        case "maihoa":
+            createQueLayout(containerId);
+            const data = RUN_QUE_FULL("MaiHoa", null);
+            data.reverseOrder = true;
+            renderResult(data, containerId);
+            break;
+
+        case "fullcustom":
+            if (container.innerHTML === "") {
+                container.innerHTML = `
+                    <div id="fullcustom-ui" style="padding:15px;">
+                        <input type="checkbox" id="fc-now" checked> Lấy giờ hiện tại<br>
+                        <select id="fc-method">
+                            <option value="MaiHoa">Mai Hoa</option>
+                            <option value="LucHao">Lục Hào</option>
+                        </select>
+                        
+                        <div id="time-inputs" style="margin:10px 0;">
+                            <select id="fc-hour"></select>h
+                            <select id="fc-day"></select>/<select id="fc-month"></select>/<select id="fc-year"></select>
+                        </div>
+
+                        <div id="lucHaoBox" style="display:none; border:1px solid #ccc; padding:10px;">
+                            <input type="text" id="fc-up" placeholder="Quẻ Thượng (VD: 1)">
+                            <input type="text" id="fc-down" placeholder="Quẻ Hạ (VD: 2)">
+                            <div>Chọn hào động:</div>
+                            <div id="hao-list">
+                                <input type="checkbox" class="hao-cb" value="1">1 <input type="checkbox" class="hao-cb" value="2">2...
+                            </div>
+                        </div>
+
+                        <button id="btnSubmit" style="margin-top:10px;">Xem Kết Quả</button>
+                    </div>
+
+
+
+                `;
+                initFullCustom(); // Gọi hàm khởi tạo sau khi HTML đã nằm trong DOM
+            }
+            break;
+
+        case "tarot":
+            container.innerHTML = `<div style="padding:20px; text-align:center;">🔮 Nội dung Tarot đang được xây dựng...</div>`;
+            break;
+
+        case "decision":
+            container.innerHTML = `<div style="padding:20px; text-align:center;">🎡 Nội dung Decision đang được xây dựng...</div>`;
+            break;
+    }
+}
+*/
 function initFullCustom() {
     initTimeSelects(); toggleTimeInputs(); toggleMethodUI();
-    const c = document.getElementById("custom-container");
-    c.querySelector("#fc-now").addEventListener("change", toggleTimeInputs);
-    c.querySelector("#fc-method").addEventListener("change", toggleMethodUI);
-    c.querySelector("#btnMaiHoa").onclick = submitMaiHoa;
-    c.querySelector("#btnLucHao").onclick = submitLucHao;
+    document.getElementById("fc-now").onchange = toggleTimeInputs;
+    document.getElementById("fc-method").onchange = toggleMethodUI;
+    document.getElementById("btnMaiHoa").onclick = submitMaiHoa;
+    document.getElementById("btnLucHao").onclick = submitLucHao;
 }
 
 function initTimeSelects() {
-    const now = new Date(); const c = document.getElementById("custom-container");
+    const now = new Date(); const c = document.getElementById("fullcustom-container");
     const h = c.querySelector('#fc-hour'), d = c.querySelector('#fc-day'), m = c.querySelector('#fc-month'), y = c.querySelector('#fc-year');
     [h, d, m, y].forEach(el => el.innerHTML = '');
     for(let i=0;i<24;i++) h.add(new Option(String(i).padStart(2,'0'), i, i===now.getHours(), i===now.getHours()));
@@ -131,20 +202,13 @@ function initTimeSelects() {
 }
 
 function toggleTimeInputs() {
-    const c = document.getElementById("custom-container");
+    const c = document.getElementById("fullcustom-container");
     const disabled = c.querySelector('#fc-now').checked;
     ['fc-hour','fc-day','fc-month','fc-year'].forEach(id => c.querySelector('#'+id).disabled = disabled);
 }
 
-function toggleMethodUI() {
-    const c = document.getElementById("custom-container");
-    const m = c.querySelector('#fc-method').value;
-    c.querySelector('#lucHaoBox').style.display = m === 'LucHao' ? 'block' : 'none';
-    c.querySelector('#maiHoaBox').style.display = m === 'MaiHoa' ? 'block' : 'none';
-}
-
 function getTimeInput() {
-    const c = document.getElementById("custom-container");
+    const c = document.getElementById("fullcustom-container");
     if(c.querySelector('#fc-now').checked) {
         const n = new Date();
         return { dd: n.getDate(), mm: n.getMonth()+1, yy: n.getFullYear(), hh: n.getHours() };
@@ -153,15 +217,31 @@ function getTimeInput() {
 }
 
 function submitMaiHoa() {
-    createQueLayout("custom-container");
-    renderResult(RUN_QUE_FULL("MaiHoa", getTimeInput()), "custom-container");
+    createQueLayout("fullcustom-container");
+    renderResult(RUN_QUE_FULL("MaiHoa", getTimeInput()), "fullcustom-container");
 }
 
+
+function toggleMethodUI() {
+    const m = document.getElementById('fc-method').value;
+    document.getElementById('lucHaoBox').style.display = (m === 'LucHao') ? 'block' : 'none';
+    document.getElementById('maiHoaBox').style.display = (m === 'MaiHoa') ? 'block' : 'none';
+}
+
+
 function submitLucHao() {
-    const c = document.getElementById("custom-container");
-    createQueLayout("custom-container");
+    const timeInput = getTimeInput();
+    // Lấy giá trị từ form của bạn
+    const upCode = document.getElementById("fc-up").value;
+    const downCode = document.getElementById("fc-down").value;
+    // Lấy các hào động đã check
+    const haoDong = [...document.querySelectorAll(".hao-cb:checked")].map(el => Number(el.value));
+
+    createQueLayout("fullcustom-container"); // Reset khu vực hiển thị kết quả
     try {
-        const res = RUN_QUE_FULL("LucHao", getTimeInput(), { upCode: c.querySelector("#fc-up").value, downCode: c.querySelector("#fc-down").value, haoDong: [...c.querySelectorAll(".hao-cb:checked")].map(el => Number(el.value)) });
-        renderResult(res, "custom-container");
-    } catch (err) { alert(err.message || err); }
+        const res = RUN_QUE_FULL("LucHao", timeInput, { upCode, downCode, haoDong });
+        renderResult(res, "fullcustom-container");
+    } catch (err) {
+        alert(err.message || err);
+    }
 }
