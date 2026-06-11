@@ -170,7 +170,7 @@ function copyTextResult(containerId) {
  */
 function switchTab(pageName) {
     // 1. Xác định tab hợp lệ, mặc định là 'maihoa' nếu pageName không tồn tại
-    const validTabs = ['maihoa', 'fullcustom', 'tarot', 'decision'];
+    const validTabs = ['maihoa', 'fullcustom', 'tarot', 'decision', 'settings'];
     const currentTab = validTabs.includes(pageName) ? pageName : 'maihoa';
     const containerId = `${currentTab}-container`;
 
@@ -211,7 +211,10 @@ function switchTab(pageName) {
             // Logic cho Decision sẽ phát triển ở đây
             console.log("Đang load module Decision...");
             break;
-
+        case 'settings':
+            console.log("Đang hiển thị trang cài đặt...");
+            break;
+            
         default:
             console.warn(`Tab ${currentTab} chưa được định nghĩa logic.`);
     }
