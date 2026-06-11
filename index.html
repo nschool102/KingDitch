@@ -23,7 +23,9 @@
 </div>
 
 <div class="content">
-    <div class="panel active" id="maihoa-container"></div>
+    <div class="panel active" id="maihoa-container">
+        <div id="result-display"></div>
+    </div>
     <div class="panel" id="fullcustom-container">
         <div id="form-area">
             <!-- SECTION 1: THOI GIAN -->
@@ -107,8 +109,13 @@
         </div>
 
     </div>
-    <div class="panel" id="tarot-container"></div>
-    <div class="panel" id="decision-container"></div>
+    <div class="panel" id="tarot-container">
+        <div class="section-box"><h3>🔮 Tarot</h3><p>Tính năng đang phát triển...</p></div>
+    </div>
+
+    <div class="panel" id="decision-container">
+        <div class="section-box"><h3>🎡 Decision</h3><p>Tính năng đang phát triển...</p></div>
+    </div>
 </div>
 
 <footer><span id="build-info">Đang kiểm tra phiên bản...</span></footer>
@@ -117,21 +124,15 @@
 <script src="./clientSide.js"></script>
 
 <script>
-    // Xử lý chuyển tab
-    // Thay thế đoạn script xử lý tab trong index.html bằng đoạn này:
-        document.querySelectorAll('.tab').forEach(t => {
-            t.addEventListener('click', () => {
-                document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
-                document.querySelectorAll('.panel').forEach(x => x.classList.remove('active'));
-                t.classList.add('active');
-                
-                const tabName = t.dataset.tab;
-                document.getElementById(tabName + '-container').classList.add('active');
-                
-                // Gọi hàm switchTab tương ứng
-                switchTab(tabName);
-            });
+    // Chỉ lắng nghe sự kiện click và gọi hàm từ clientSide.js
+    document.querySelectorAll('.tab').forEach(t => {
+        t.addEventListener('click', () => {
+            switchTab(t.dataset.tab);
         });
+    });
+
+    // Khởi tạo khi load xong
+    window.onload = () => switchTab('maihoa');
 
     // Load build info từ file txt
     fetch('./build.txt?ts=' + Date.now())
