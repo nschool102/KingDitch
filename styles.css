@@ -1,9 +1,5 @@
 /*-- Thiết lập biến màu (Theme Variables) --*/
 :root {
-    --bg-color: #0f1712;
-    --panel-color: #1e2a22;
-    --accent-color: #2d6a4f;
-    --text-main: #d1d9d4;
     --safe-area-top: env(safe-area-inset-top);
 }
 
@@ -31,7 +27,7 @@ body {
 
 .tab { 
     color: #8fa398;
-    flex: 1 1 45%;         /* Mỗi tab chiếm tối thiểu 45% chiều rộng (để được 2 tab/hàng) */
+    flex: 1 1 20%;         /* Mỗi tab chiếm tối thiểu 45% chiều rộng (để được 2 tab/hàng) */
     padding: 15px; 
     text-align: center; 
     cursor: pointer; 
@@ -69,7 +65,14 @@ body {
 .table th { background: var(--accent-color); color: white; padding: 10px; }
 .table td { padding: 10px; text-align: center; color: var(--text-main); }
 .table th:nth-child(7), .table td:nth-child(7) { border-left: 2px solid #2d3e34; }
-.dong { background: #3d2c1d !important; font-weight: bold; }
+
+/* Áp dụng màu cho tất cả các thẻ td nằm bên trong một tr có class .dong */
+tr.dong td {
+    color: #FF0000 !important;
+    background-color: #fff !important;
+    font-weight: bold !important;
+}
+
 .khong-badge { background: #ab4622; color: #fff; border-radius: 50%; width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px; }
 
 /*-- Màu Ngũ Hành (Cố định) --*/
@@ -80,9 +83,9 @@ body {
 .thuy { color: #2a1b9d; font-weight: bold; }
 
 /*-- Forms & Buttons --*/
-select { background: #0f1712; color: var(--text-main); padding: 10px; border: 1px solid #2d3e34; border-radius: 8px; width: 100%; }
+select { background: var(--panel-color); color: var(--text-main); padding: 10px; border: 1px solid #2d3e34; border-radius: 8px;}
 .section-title { font-size: 18px; font-weight: 700; margin-bottom: 15px; }
-.time-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.time-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 50%; }
 .double-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
 .hao-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 
@@ -94,12 +97,11 @@ select { background: #0f1712; color: var(--text-main); padding: 10px; border: 1p
     padding: 12px; 
     cursor: pointer; 
     font-weight: 700;
-    width: 100%;
     margin-top: 10px;
 }
 
 /*-- Utilities --*/
-textarea { background: #0f1712; color: var(--text-main); border: 1px solid #2d3e34; width: 100%; padding: 10px; }
+textarea { background: var(--panel-color); color: var(--text-main); border: 1px solid #2d3e34; width: 100%; padding: 10px; }
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--bg-color); }
 ::-webkit-scrollbar-thumb { background: var(--accent-color); border-radius: 10px; }
@@ -109,16 +111,40 @@ footer {
     padding: 15px;
     text-align: center;
     font-size: 11px;
-    color: var(--accent-color);
-    background: #050a07;
+    color: var(--panel-color);
+    background: var(--accent-color);
     border-top: 1px solid #2d3e34;
     margin-top: auto;
 }
 
-/*-- Responsive --*/
+/* Ép toàn bộ header chứa 3 box luôn nằm trên 1 dòng */
+#headerBox.header {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important; /* Quan trọng: cấm xuống dòng */
+    gap: 8px !important;           /* Khoảng cách thu nhỏ lại cho vừa màn hình đt */
+    overflow-x: hidden;           /* Tránh bị tràn ngang màn hình */
+}
+
+/* Ép các box chiếm tỷ lệ đều nhau */
+#headerBox.header .que-box {
+    flex: 1 1 0px !important;    /* Tự động chia đều chiều rộng */
+    min-width: 0 !important;      /* Cho phép box co nhỏ nếu cần thiết */
+    padding: 8px 5px !important;  /* Giảm padding để chữ không bị tràn */
+}
+
+/*-- Responsive (Tất cả thiết bị di động) --*/
 @media (max-width: 600px) {
+    /* 1. Layout tổng thể */
     .content { display: flex; flex-direction: column; align-items: center; }
-    .section-box, .table, .header-info { width: 95%; margin-left: auto; margin-right: auto; }
+    .section-box, .table, .header-info { margin-left: auto; margin-right: auto; }
+
+    /* 2. Tinh chỉnh font chữ và các thành phần nhỏ (cho màn hình <= 480px) */
+    @media (max-width: 480px) {
+        .que-name { font-size: 13px !important; }
+        .donut { width: 45px !important; height: 45px !important; }
+        .donut::before { width: 35px !important; height: 35px !important; }
+    }
 }
 
 /*-- Khôi phục Donut (Vòng tròn điểm số) --*/
@@ -157,3 +183,14 @@ footer {
 .tho::before { content: "⛰️"; margin-right: 6px; display: inline-block; }
 .kim::before { content: "💰"; margin-right: 6px; display: inline-block; }
 .thuy::before { content: "💧"; margin-right: 6px; display: inline-block; }
+
+/*-- Nút Apply theme - để nó k bị lạc quẻ so với theme Chính --*/
+.theme-controls button {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}

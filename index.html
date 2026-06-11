@@ -121,9 +121,17 @@
     <div class="panel" id="settings-container">
         <div class="section-box">
             <div class="section-title">⚙️ CÀI ĐẶT GIAO DIỆN</div>
-            <select id="theme-selector" onchange="changeTheme(this.value)">
-                 <option value="xanhla">🌿 Xanh Lá</option>
-                 </select>
+            <div class="theme-controls">
+                <select id="theme-selector">
+                    </select>
+                
+                <select id="mode-selector">
+                    <option value="dark">🌙 Dark</option>
+                    <option value="light">☀️ Light</option>
+                </select>
+                
+                <button onclick="applyTheme()">Apply Theme</button>
+            </div>
         </div>
     </div>
 </div>
@@ -132,25 +140,5 @@
 
 <script src="./serverSide.js"></script>
 <script src="./clientSide.js"></script>
-
-<script>
-    // Chỉ lắng nghe sự kiện click và gọi hàm từ clientSide.js
-    document.querySelectorAll('.tab').forEach(t => {
-        t.addEventListener('click', () => {
-            switchTab(t.dataset.tab);
-        });
-    });
-
-    // Khởi tạo khi load xong
-    window.onload = () => switchTab('maihoa');
-
-    // Load build info từ file txt
-    fetch('./build.txt?ts=' + Date.now())
-        .then(r => r.text())
-        .then(v => { document.getElementById('build-info').textContent = 'Build: ' + v.trim(); });
-
-    // Đăng ký Service Worker cho PWA
-    if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
-</script>
 </body>
 </html>

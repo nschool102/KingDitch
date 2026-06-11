@@ -1,27 +1,95 @@
 /*-- ------------------------------------- ĐỔI THEME ------------------------------------- --*/
 const themes = {
-    xanhla: { bg: '#0f1712', panel: '#1e2a22', accent: '#2d6a4f' },
-    xanhbo: { bg: '#1a1d12', panel: '#2a2e1d', accent: '#a3c93b' },
-    xanhduong: { bg: '#0f1a2a', panel: '#1a2a3a', accent: '#3498db' },
-    do: { bg: '#1a0f0f', panel: '#2a1a1a', accent: '#e74c3c' },
-    cam: { bg: '#1a140f', panel: '#2a221a', accent: '#e67e22' },
-    vang: { bg: '#1a1a0f', panel: '#2a2a1a', accent: '#f1c40f' },
-    hong: { bg: '#1a0f15', panel: '#2a1a25', accent: '#ff69b4' },
-    tim: { bg: '#1a0f1a', panel: '#2a1a2a', accent: '#9b59b6' },
-    timhoaca: { bg: '#17121a', panel: '#241d2a', accent: '#d8bfd8' },
-    cham: { bg: '#0f0f1a', panel: '#1a1a2a', accent: '#4b0082' }
-};
+  xanhla: {   
+    name: '🌿 Xanh Lá',
+    dark: {bg: '#0f1712', panel: '#1e2a22', accent: '#2d6a4f'},
+    light: {bg: '#f3fff6', panel: '#ffffff', accent: '#2d6a4f'}   
+  },
+  xanhbo: {
+    name: '🥑 Xanh Bơ',
+    dark: {bg: '#1a1d12', panel: '#2a2e1d', accent: '#a3c93b'},
+    light: {bg: '#f8ffea', panel: '#ffffff', accent: '#a3c93b'}   
+  },
+  xanhduong: {
+    name: '🌊 Xanh Dương',
+    dark: {bg: '#0f1a2a', panel: '#1a2a3a', accent: '#3498db'},
+    light: {bg: '#eef8ff', panel: '#ffffff', accent: '#3498db'}   
+  },
+  do: {
+    name: '🔥 Đỏ',
+    dark: {bg: '#1a0f0f', panel: '#2a1a1a', accent: '#e74c3c'},
+    light: {bg: '#fff3f3', panel: '#ffffff', accent: '#e74c3c'}   
+  },
+  cam: {
+    name: '🍊 Cam',
+    dark: {bg: '#1a140f', panel: '#2a221a', accent: '#e67e22'},
+    light: {bg: '#fff7ef', panel: '#ffffff', accent: '#e67e22'}   
+  },
+  vang: {
+    name: '☀️ Vàng',
+    dark: {bg: '#1a1a0f', panel: '#2a2a1a', accent: '#f1c40f'},
+    light: {bg: '#fffdea', panel: '#ffffff', accent: '#f1c40f'}   
+  },
+  hong: {
+    name: '🌸 Hồng',
+    dark: {bg: '#1a0f15', panel: '#2a1a25', accent: '#ff69b4'},
+    light: {bg: '#fff1f7', panel: '#ffffff', accent: '#ff69b4'}   
+  },
+  tim: {
+    name: '🔮 Tím',
+    dark: {bg: '#1a0f1a', panel: '#2a1a2a', accent: '#9b59b6'},
+    light: {bg: '#f7f0ff', panel: '#ffffff', accent: '#9b59b6'}   
+  },
+  timhoaca: {
+    name: '💜 Tím Hoa Cà',
+    dark: {bg: '#17121a', panel: '#241d2a', accent: '#d8bfd8'},
+    light: {bg: '#faf6fc', panel: '#ffffff', accent: '#d8bfd8'}   
+  },
+  cham: {
+    name: '🌌 Chàm',
+    dark: {bg: '#0f0f1a', panel: '#1a1a2a', accent: '#4b0082'},
+    light: {bg: '#f2f4ff', panel: '#ffffff', accent: '#4b0082'}
+  } // <--- Đã thêm dấu đóng cho object 'cham'
+}; // <--- Đã thêm dấu đóng cho object 'themes'
 
-function changeTheme(themeKey) {
-    const root = document.documentElement;
-    const theme = themes[themeKey] || themes.xanhla;
-    
-    root.style.setProperty('--bg-color', theme.bg);
-    root.style.setProperty('--panel-color', theme.panel);
-    root.style.setProperty('--accent-color', theme.accent);
-    
-    localStorage.setItem('user-theme', themeKey);
+// 1. Hàm đổ danh sách theme vào dropdown
+function initThemeSelector() {
+    const selector = document.getElementById('theme-selector');
+    if (!selector) return;
+
+    selector.innerHTML = ''; 
+    for (const key in themes) {
+        const option = document.createElement('option');
+        option.value = key;
+        option.text = themes[key].name;
+        selector.appendChild(option);
+    }
 }
+
+// 2. Hàm Apply - Chỉ chạy khi nhấn nút
+function applyTheme() {
+    const themeKey = document.getElementById('theme-selector').value;
+    const mode = document.getElementById('mode-selector').value;
+    
+    const colors = themes[themeKey][mode]; // Lấy màu dựa trên theme + mode
+    
+    const root = document.documentElement;
+    root.style.setProperty('--bg-color', colors.bg);
+    root.style.setProperty('--panel-color', colors.panel);
+    root.style.setProperty('--accent-color', colors.accent);
+
+    // Định nghĩa màu chữ dựa trên mode
+    // Dark mode: dùng trắng/xám sáng (#e0e0e0)
+    // Light mode: dùng đen/xám đậm (#1a1a1a)
+    const textColor = (mode === 'dark') ? '#e0e0e0' : '#1a1a1a';
+    root.style.setProperty('--text-main', textColor);
+    
+    // Lưu lại lựa chọn
+    localStorage.setItem('user-theme', themeKey);
+    localStorage.setItem('user-mode', mode);
+}
+
+
 /*-- ------------------------------------- END OF ĐỔI THEME ------------------------------------- --*/
 
 /*-- ------------------------------------- RENDER THÔNG TIN QUẺ DỊCH ------------------------------------- --*/
@@ -53,8 +121,8 @@ function createQueLayout(targetId) {
             <div class="header-info"></div>
             <div class="header" id="headerBox"></div>
             <table class="table" id="table"></table>
-            <div style="display:flex; justify-content:flex-end; margin-top:10px;">
-                <button class="btn-copy" style="padding:8px 14px; border:none; border-radius:8px; background:#1976d2; color:white; cursor:pointer;">📋 Copy</button>
+            <div style="display:flex; margin-top:10px;">
+                <button class="btn-copy">📋 Copy</button>
             </div>
             <textarea class="textResult" rows="5" readonly></textarea>
         </div>
@@ -281,4 +349,61 @@ function submitLucHao() {
     } catch (err) {
         alert(err.message || err);
     }
+}
+
+// --- 1. Load Build Info & Service Worker ---
+function initApp() {
+    // Load build info
+    fetch('./build.txt?ts=' + Date.now())
+        .then(r => r.text())
+        .then(v => { 
+            const el = document.getElementById('build-info');
+            if(el) el.textContent = 'Build: ' + v.trim(); 
+        });
+
+    // PWA Service Worker
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js');
+    }
+}
+
+// --- 2. Xử lý Tab Navigation ---
+function setupTabs() {
+    document.querySelectorAll('.tab').forEach(t => {
+        t.addEventListener('click', () => {
+            switchTab(t.dataset.tab);
+        });
+    });
+}
+
+// Đặt cái này ở cuối file clientSide.js
+window.onload = function() {
+    // 1. Khởi tạo UI hệ thống
+    initApp();           // Load build info, service worker
+    setupTabs();         // Gán sự kiện click cho các tab
+    initThemeSelector(); // Đổ dữ liệu vào dropdown theme
+
+    // 2. Phục hồi cấu hình người dùng (Theme & Mode)
+    const savedTheme = localStorage.getItem('user-theme') || 'xanhla';
+    const savedMode = localStorage.getItem('user-mode') || 'dark';
+
+    // Set giá trị vào các select box (nếu tồn tại)
+    const themeEl = document.getElementById('theme-selector');
+    const modeEl = document.getElementById('mode-selector');
+    
+    if (themeEl) themeEl.value = savedTheme;
+    if (modeEl) modeEl.value = savedMode;
+
+    // 3. Áp dụng theme và chạy tab mặc định
+    applyTheme();        // Dùng hàm applyTheme thay vì changeTheme để lấy cả mode
+    switchTab('maihoa'); // Chạy tab đầu tiên sau khi UI đã sẵn sàng
+};
+
+// Hàm phụ trợ để gán sự kiện tab
+function setupTabs() {
+    document.querySelectorAll('.tab').forEach(t => {
+        t.onclick = function() {
+            switchTab(this.getAttribute('data-tab'));
+        };
+    });
 }
