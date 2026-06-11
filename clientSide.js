@@ -2,8 +2,8 @@
 const themes = {
   xanhla: {   
     name: '🌿 Xanh Lá',
-    dark: {bg: '#0f1712', panel: '#1e2a22', accent: '#2d6a4f'},
-    light: {bg: '#f3fff6', panel: '#ffffff', accent: '#2d6a4f'}   
+    dark: {bg: '#0f1712', panel: '#1e2a22', accent: '#34CB85'},
+    light: {bg: '#f3fff6', panel: '#ffffff', accent: '#34CB85'}   
   },
   xanhbo: {
     name: '🥑 Xanh Bơ',
@@ -47,8 +47,8 @@ const themes = {
   },
   cham: {
     name: '🌌 Chàm',
-    dark: {bg: '#0f0f1a', panel: '#1a1a2a', accent: '#4b0082'},
-    light: {bg: '#f2f4ff', panel: '#ffffff', accent: '#4b0082'}
+    dark: {bg: '#0f0f1a', panel: '#3E3E65', accent: '#A734F9'},
+    light: {bg: '#f2f4ff', panel: '#ffffff', accent: '#A734F9'}
   } // <--- Đã thêm dấu đóng cho object 'cham'
 }; // <--- Đã thêm dấu đóng cho object 'themes'
 
