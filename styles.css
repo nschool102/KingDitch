@@ -125,7 +125,7 @@ body {
 }
 
 .table th { 
-	background: #1976d2; 
+	background: #e67e22; 
 	color: white; 
 	padding: 8px; 
 }
@@ -237,8 +237,8 @@ select {
 }
 
 .submit-btn, .btn-copy { 
-	background: #E67E22; 
-	color: #FFF5EE; 
+	background: #E67E22 !important; 
+	color: #FFF5EE !important; 
 	border: none; border-radius: 10px; 
 	padding: 12px 18px; 
 	cursor: pointer; 
@@ -271,4 +271,24 @@ footer {
 #build-info {
     font-family: monospace; /* Font chữ kiểu code trông chuyên nghiệp hơn */
     letter-spacing: 0.5px;
+}
+
+/*-- 3. Mobile Layout: Justify các section --*/
+@media (max-width: 600px) {
+    .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Justify/Căn giữa các phần tử */
+    }
+
+    .section-box, .table, .header-info {
+        width: 95%; /* Tạo khoảng hở hai bên */
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Đảm bảo các grid trong section cũng được căn chỉnh */
+    .time-grid, .double-grid, .hao-grid {
+        justify-items: center;
+    }
 }
