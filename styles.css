@@ -25,17 +25,18 @@ body {
 .tabs { 
     background: var(--panel-color);
     display: flex; 
+    flex-wrap: wrap;        /* Cho phép xuống dòng khi hết chỗ */
     border-bottom: 1px solid #2d3e34; 
 }
 
 .tab { 
     color: #8fa398;
-    flex: 1; 
+    flex: 1 1 45%;         /* Mỗi tab chiếm tối thiểu 45% chiều rộng (để được 2 tab/hàng) */
     padding: 15px; 
     text-align: center; 
     cursor: pointer; 
     border-bottom: 3px solid transparent; 
-    white-space: nowrap;
+    white-space: nowrap;    /* Giữ chữ của từng tab đi chung với nhau */
     transition: all 0.3s ease;
     user-select: none;
 }
