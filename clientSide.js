@@ -138,81 +138,59 @@ function copyTextResult(containerId) {
 }
 
 /*-- ------------------------------------- FullCustom & SwitchTab ------------------------------------- --*/
-
+/**
+ * Quản lý logic chuyển đổi giữa các tab
+ * @param {string} pageName - Tên tab cần chuyển đến (maihoa, fullcustom, tarot, decision)
+ */
 function switchTab(pageName) {
-    const containerId = `${pageName}-container`;
-    // Ẩn tất cả panels
+    // 1. Xác định tab hợp lệ, mặc định là 'maihoa' nếu pageName không tồn tại
+    const validTabs = ['maihoa', 'fullcustom', 'tarot', 'decision'];
+    const currentTab = validTabs.includes(pageName) ? pageName : 'maihoa';
+    const containerId = `${currentTab}-container`;
+
+    // 2. Cập nhật UI: Ẩn tất cả panel và gỡ class active của các tab
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-    // Hiển thị panel được chọn
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+
+    // 3. Kích hoạt Tab và Panel tương ứng
+    const tabElement = document.querySelector(`.tab[data-tab="${currentTab}"]`);
     const container = document.getElementById(containerId);
-    if(container) container.classList.add('active');
 
-    if (pageName === "fullcustom") {
-        // Gọi hàm khởi tạo các sự kiện cho form có sẵn trong HTML
-        initFullCustom();
-    } else if (pageName === "maihoa") {
-        createQueLayout(containerId);
-        renderResult(RUN_QUE_FULL("MaiHoa", null), containerId);
-    }
-}
-/*
-function switchTab(pageName) {
-    const containerId = `${pageName}-container`;
-    const container = document.getElementById(containerId);
-    if (!container) return;
+    if (tabElement) tabElement.classList.add('active');
+    if (container) container.classList.add('active');
 
-    switch(pageName) {
-        case "maihoa":
-            createQueLayout(containerId);
-            const data = RUN_QUE_FULL("MaiHoa", null);
-            data.reverseOrder = true;
-            renderResult(data, containerId);
-            break;
-
-        case "fullcustom":
-            if (container.innerHTML === "") {
-                container.innerHTML = `
-                    <div id="fullcustom-ui" style="padding:15px;">
-                        <input type="checkbox" id="fc-now" checked> Lấy giờ hiện tại<br>
-                        <select id="fc-method">
-                            <option value="MaiHoa">Mai Hoa</option>
-                            <option value="LucHao">Lục Hào</option>
-                        </select>
-                        
-                        <div id="time-inputs" style="margin:10px 0;">
-                            <select id="fc-hour"></select>h
-                            <select id="fc-day"></select>/<select id="fc-month"></select>/<select id="fc-year"></select>
-                        </div>
-
-                        <div id="lucHaoBox" style="display:none; border:1px solid #ccc; padding:10px;">
-                            <input type="text" id="fc-up" placeholder="Quẻ Thượng (VD: 1)">
-                            <input type="text" id="fc-down" placeholder="Quẻ Hạ (VD: 2)">
-                            <div>Chọn hào động:</div>
-                            <div id="hao-list">
-                                <input type="checkbox" class="hao-cb" value="1">1 <input type="checkbox" class="hao-cb" value="2">2...
-                            </div>
-                        </div>
-
-                        <button id="btnSubmit" style="margin-top:10px;">Xem Kết Quả</button>
-                    </div>
-
-
-
-                `;
-                initFullCustom(); // Gọi hàm khởi tạo sau khi HTML đã nằm trong DOM
+    // 4. Logic xử lý nội dung riêng biệt cho từng tab
+    switch (currentTab) {
+        case 'maihoa':
+            // Chỉ render lại nếu panel đang trống (tránh render chồng lặp)
+            if (container && container.innerHTML.trim() === '<div id="result-display"></div>') {
+                createQueLayout(containerId);
+                renderResult(RUN_QUE_FULL("MaiHoa", null), containerId);
             }
             break;
 
-        case "tarot":
-            container.innerHTML = `<div style="padding:20px; text-align:center;">🔮 Nội dung Tarot đang được xây dựng...</div>`;
+        case 'fullcustom':
+            // Gọi hàm khởi tạo form cho Lục Hào/Mai Hoa tùy chỉnh
+            if (typeof initFullCustom === 'function') {
+                initFullCustom();
+            }
             break;
 
-        case "decision":
-            container.innerHTML = `<div style="padding:20px; text-align:center;">🎡 Nội dung Decision đang được xây dựng...</div>`;
+        case 'tarot':
+            // Logic cho Tarot sẽ phát triển ở đây
+            console.log("Đang load module Tarot...");
             break;
+
+        case 'decision':
+            // Logic cho Decision sẽ phát triển ở đây
+            console.log("Đang load module Decision...");
+            break;
+
+        default:
+            console.warn(`Tab ${currentTab} chưa được định nghĩa logic.`);
     }
 }
-*/
+
 function initFullCustom() {
     initTimeSelects(); toggleTimeInputs(); toggleMethodUI();
     document.getElementById("fc-now").onchange = toggleTimeInputs;
