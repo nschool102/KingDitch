@@ -72,13 +72,37 @@ function renderResult(res, containerId = "result-display") {
     const ch = [...(d.chinh.data || [])].sort((a, b) => b.hao - a.hao);
     const bi = [...(d.bien.data || [])].sort((a, b) => b.hao - a.hao);
     const haoDong = d.chinh.haoDong || [];
+    
     const t = res.time || {};
     const lunar = t.lunar || {};
+    
 
     info.innerHTML = `
         <div style="display:flex; flex-direction:column; gap:8px; line-height:1.8; font-size:14px;">
             <div><b>Dương lịch:</b> ${t.hh || ""}h ${t.dd || ""}/${t.mm || ""}/${t.yy || ""} (<b>Âm lịch:</b> ${lunar.am.ngay || ""}/${lunar.am.thang || ""}/${lunar.am.nam || ""})</div>
         </div>
+        <div>
+          <b>Giờ:</b>
+          <span class="${getNguHanhClass(gioAm.nguHanhChi || gioAm.nguHanhCan)}">
+            ${gioAm.can || ""} ${gioAm.chi || ""}${gioAm.nguHanhChi ? "-" + gioAm.nguHanhChi : ""}
+          </span>&nbsp;&nbsp;|&nbsp;&nbsp;
+
+          <b>Ngày:</b>
+          <span class="${getNguHanhClass(ngayAm.nguHanhChi || ngayAm.nguHanhCan)}">
+            ${ngayAm.can || ""} ${ngayAm.chi || ""}${ngayAm.nguHanhChi ? "-" + ngayAm.nguHanhChi : ""}
+          </span>&nbsp;&nbsp;|&nbsp;&nbsp;
+
+          <b>Tháng:</b>
+          <span class="${getNguHanhClass(thangAm.nguHanhChi || thangAm.nguHanhCan)}">
+            ${thangAm.can || ""} ${thangAm.chi || ""}${thangAm.nguHanhChi ? "-" + thangAm.nguHanhChi : ""}
+          </span>&nbsp;&nbsp;|&nbsp;&nbsp;
+
+          <b>Năm:</b>
+          <span class="${getNguHanhClass(namAm.nguHanhChi || namAm.nguHanhCan)}">
+            ${namAm.can || ""} ${namAm.chi || ""}${namAm.nguHanhChi ? "-" + namAm.nguHanhChi : ""}
+          </span>
+        </div>
+
     `;
 
     header.innerHTML = `${renderBox(d.chinh)} ${renderBox(d.ho)} ${renderBox(d.bien)}`;
