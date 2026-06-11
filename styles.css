@@ -236,7 +236,7 @@ select {
 	font-size: 14px; 
 }
 
-.submit-btn { 
+.submit-btn, .btn-copy { 
 	background: #E67E22; 
 	color: #FFF5EE; 
 	border: none; border-radius: 10px; 
