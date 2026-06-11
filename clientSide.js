@@ -1,3 +1,29 @@
+/*-- ------------------------------------- ĐỔI THEME ------------------------------------- --*/
+const themes = {
+    xanhla: { bg: '#0f1712', panel: '#1e2a22', accent: '#2d6a4f' },
+    xanhbo: { bg: '#1a1d12', panel: '#2a2e1d', accent: '#a3c93b' },
+    xanhduong: { bg: '#0f1a2a', panel: '#1a2a3a', accent: '#3498db' },
+    do: { bg: '#1a0f0f', panel: '#2a1a1a', accent: '#e74c3c' },
+    cam: { bg: '#1a140f', panel: '#2a221a', accent: '#e67e22' },
+    vang: { bg: '#1a1a0f', panel: '#2a2a1a', accent: '#f1c40f' },
+    hong: { bg: '#1a0f15', panel: '#2a1a25', accent: '#ff69b4' },
+    tim: { bg: '#1a0f1a', panel: '#2a1a2a', accent: '#9b59b6' },
+    timhoaca: { bg: '#17121a', panel: '#241d2a', accent: '#d8bfd8' },
+    cham: { bg: '#0f0f1a', panel: '#1a1a2a', accent: '#4b0082' }
+};
+
+function changeTheme(themeKey) {
+    const root = document.documentElement;
+    const theme = themes[themeKey] || themes.xanhla;
+    
+    root.style.setProperty('--bg-color', theme.bg);
+    root.style.setProperty('--panel-color', theme.panel);
+    root.style.setProperty('--accent-color', theme.accent);
+    
+    localStorage.setItem('user-theme', themeKey);
+}
+/*-- ------------------------------------- END OF ĐỔI THEME ------------------------------------- --*/
+
 /*-- ------------------------------------- RENDER THÔNG TIN QUẺ DỊCH ------------------------------------- --*/
 
 function getNguHanhClass(h) {
