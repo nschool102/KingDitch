@@ -32,6 +32,17 @@ body {
 	text-align: center; 
 	cursor: pointer; 
 	border-bottom: 3px solid transparent; 
+	white-space: nowrap;        /* Chữ không bao giờ nhảy xuống dòng */
+    transition: all 0.3s ease;  /* Hiệu ứng chuyển màu mượt */
+    user-select: none;          /* Không bị bôi đen khi bấm nhanh */
+}
+
+/* Chỉ áp dụng hiệu ứng hover khi thiết bị có hỗ trợ chuột/trỏ chuột */
+@media (hover: hover) and (pointer: fine) {
+    .tab:hover {
+        background-color: rgba(44, 90, 110, 0.1);
+        cursor: pointer;
+    }
 }
 
 .tab.active { 
