@@ -121,7 +121,7 @@ function createQueLayout(targetId) {
             <div class="header-info"></div>
             <div class="header" id="headerBox"></div>
             <table class="table" id="table"></table>
-            <div style="display:flex; margin-top:10px;">
+            <div style="display:flex; justify-content:center; margin-top:10px;">
                 <button class="btn-copy">📋 Copy</button>
             </div>
             <textarea class="textResult" rows="5" readonly></textarea>

@@ -86,7 +86,7 @@ tr.dong td {
 /*-- Forms & Buttons --*/
 select { background: var(--panel-color); color: var(--text-main); padding: 10px; border: 1px solid #2d3e34; border-radius: 8px;}
 .section-title { font-size: 18px; font-weight: 700; margin-bottom: 15px; }
-.time-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 50%; }
+.time-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 100%; }
 .double-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
 .hao-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 
@@ -194,4 +194,172 @@ footer {
     border-radius: 5px;
     cursor: pointer;
     font-weight: bold;
+}
+
+/* =========================
+   MOBILE RESPONSIVE FIX
+   ========================= */
+@media (max-width: 768px) {
+
+    /* Layout tổng */
+    body {
+        font-size: 14px;
+    }
+
+    .app,
+    .content,
+    .panel,
+    .section-box,
+    .header-info,
+    .que-box,
+    textarea,
+    select,
+    form,
+    table {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .panel.active {
+        padding: 10px;
+    }
+
+    .header-info,
+    .que-box,
+    .section-box {
+        padding: 12px;
+    }
+
+    /* Tabs */
+    .tab {
+        flex: 1 1 33%;
+        padding: 10px 5px;
+        font-size: 12px;
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    /* Header 3 box */
+    #headerBox.header {
+        gap: 4px !important;
+    }
+
+    #headerBox.header .que-box {
+        padding: 6px 3px !important;
+        font-size: 12px;
+    }
+
+    .que-name {
+        font-size: 12px !important;
+    }
+
+    /* Grid */
+    .time-grid {
+        width: 100% !important;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .double-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hao-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Table */
+    .table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        font-size: 12px;
+    }
+
+    .table th,
+    .table td {
+        padding: 6px;
+    }
+
+    /* Form */
+    input,
+    select,
+    textarea,
+    button {
+        width: 100%;
+        max-width: 100%;
+        font-size: 14px;
+    }
+
+    /* Textarea */
+    textarea {
+        min-height: 120px;
+    }
+
+    /* Donut */
+    .donut {
+        width: 45px !important;
+        height: 45px !important;
+    }
+
+    .donut::before {
+        width: 33px !important;
+        height: 33px !important;
+    }
+
+    .donut span {
+        font-size: 10px;
+    }
+
+    /* Tiêu đề */
+    .section-title {
+        font-size: 16px;
+    }
+
+    /* Nút Copy căn giữa */
+    .btn-copy {
+        display: block;
+        width: fit-content !important;
+        min-width: 120px;
+        margin: 15px auto !important;
+        padding: 12px 24px;
+    }
+
+    /* Các button khác full width */
+    .submit-btn {
+        width: 100%;
+    }
+}
+
+/* Mobile cực nhỏ */
+@media (max-width: 480px) {
+
+    body {
+        font-size: 13px;
+    }
+
+    .tab {
+        font-size: 11px;
+        padding: 8px 4px;
+    }
+
+    .section-title {
+        font-size: 14px;
+    }
+
+    .table {
+        font-size: 11px;
+    }
+
+    .table th,
+    .table td {
+        padding: 4px;
+    }
+
+    .que-name {
+        font-size: 11px !important;
+    }
+
+    .hao-grid {
+        grid-template-columns: 1fr;
+    }
 }
