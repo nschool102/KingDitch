@@ -376,6 +376,36 @@ function setupTabs() {
     });
 }
 
+// Gán sự kiện cho nút Draw
+// clientSide.js
+
+// Hàm xử lý khi bấm nút "Draw"
+function handleDrawDecision() {
+    // Truy cập trực tiếp biến decisionDetails nằm ở file serverSide.js
+    if (typeof decisionDetails === 'undefined') {
+        console.error("Dữ liệu chưa được load!");
+        return;
+    }
+
+    const randomIndex = Math.floor(Math.random() * decisionDetails.length);
+    const selected = decisionDetails[randomIndex];
+
+    // Cập nhật UI
+    const resDetail = document.getElementById('res-detail');
+
+    if (resDetail) {
+        resDetail.innerText = selected.detail;
+    }
+}
+
+// Gán sự kiện cho nút Draw (gọi sau khi trang đã load xong)
+document.addEventListener('DOMContentLoaded', () => {
+    const btnDraw = document.getElementById('btn-draw');
+    if (btnDraw) {
+        btnDraw.addEventListener('click', handleDrawDecision);
+    }
+});
+
 // Đặt cái này ở cuối file clientSide.js
 window.onload = function() {
     // 1. Khởi tạo UI hệ thống
