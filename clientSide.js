@@ -1,55 +1,76 @@
 /*-- ------------------------------------- ĐỔI THEME ------------------------------------- --*/
 const themes = {
-  xanhla: {   
+  xanhla: {
     name: '🌿 Xanh Lá',
-    dark: {bg: '#0f1712', panel: '#1e2a22', accent: '#34CB85'},
-    light: {bg: '#f3fff6', panel: '#ffffff', accent: '#34CB85'}   
+    dark: {bg: '#0d1712', panel: '#1c2b22', accent: '#34CB85'},
+    light: {bg: '#f3fff6', panel: '#ffffff', accent: '#34CB85'}
   },
+
   xanhbo: {
     name: '🥑 Xanh Bơ',
-    dark: {bg: '#1a1d12', panel: '#2a2e1d', accent: '#a3c93b'},
-    light: {bg: '#f8ffea', panel: '#ffffff', accent: '#a3c93b'}   
+    dark: {bg: '#181d11', panel: '#29301d', accent: '#A3C93B'},
+    light: {bg: '#f8ffea', panel: '#ffffff', accent: '#A3C93B'}
   },
+
   xanhduong: {
     name: '🌊 Xanh Dương',
-    dark: {bg: '#0f1a2a', panel: '#1a2a3a', accent: '#3498db'},
-    light: {bg: '#eef8ff', panel: '#ffffff', accent: '#3498db'}   
+    dark: {bg: '#0d1624', panel: '#1c2d40', accent: '#4DA3FF'},
+    light: {bg: '#eef8ff', panel: '#ffffff', accent: '#4DA3FF'}
   },
-  do: {
-    name: '🔥 Đỏ',
-    dark: {bg: '#1a0f0f', panel: '#2a1a1a', accent: '#e74c3c'},
-    light: {bg: '#fff3f3', panel: '#ffffff', accent: '#e74c3c'}   
-  },
-  cam: {
-    name: '🍊 Cam',
-    dark: {bg: '#1a140f', panel: '#2a221a', accent: '#e67e22'},
-    light: {bg: '#fff7ef', panel: '#ffffff', accent: '#e67e22'}   
-  },
-  vang: {
-    name: '☀️ Vàng',
-    dark: {bg: '#1a1a0f', panel: '#2a2a1a', accent: '#f1c40f'},
-    light: {bg: '#fffdea', panel: '#ffffff', accent: '#f1c40f'}   
-  },
+
   hong: {
     name: '🌸 Hồng',
-    dark: {bg: '#1a0f15', panel: '#2a1a25', accent: '#ff69b4'},
-    light: {bg: '#fff1f7', panel: '#ffffff', accent: '#ff69b4'}   
+    dark: {bg: '#1a0f15', panel: '#30202a', accent: '#FF6FB5'},
+    light: {bg: '#fff1f7', panel: '#ffffff', accent: '#FF6FB5'}
   },
+
   tim: {
     name: '🔮 Tím',
-    dark: {bg: '#1a0f1a', panel: '#2a1a2a', accent: '#9b59b6'},
-    light: {bg: '#f7f0ff', panel: '#ffffff', accent: '#9b59b6'}   
+    dark: {bg: '#170f1c', panel: '#2c1f35', accent: '#B56CFF'},
+    light: {bg: '#f7f0ff', panel: '#ffffff', accent: '#B56CFF'}
   },
-  timhoaca: {
-    name: '💜 Tím Hoa Cà',
-    dark: {bg: '#17121a', panel: '#241d2a', accent: '#d8bfd8'},
-    light: {bg: '#faf6fc', panel: '#ffffff', accent: '#d8bfd8'}   
-  },
+
   cham: {
     name: '🌌 Chàm',
-    dark: {bg: '#0f0f1a', panel: '#3E3E65', accent: '#A734F9'},
-    light: {bg: '#f2f4ff', panel: '#ffffff', accent: '#A734F9'}
-  } // <--- Đã thêm dấu đóng cho object 'cham'
+    dark: {bg: '#10101d', panel: '#23233f', accent: '#8E5BFF'},
+    light: {bg: '#f3f4ff', panel: '#ffffff', accent: '#8E5BFF'}
+  },
+
+  sunset: {
+    name: '🌅 Sunset',
+    dark: {bg: '#1c1310', panel: '#35211b', accent: '#FF7A59'},
+    light: {bg: '#fff5ef', panel: '#ffffff', accent: '#FF7A59'}
+  },
+
+  sakura: {
+    name: '🌺 Sakura',
+    dark: {bg: '#1b1217', panel: '#332029', accent: '#FF8FB8'},
+    light: {bg: '#fff3f7', panel: '#ffffff', accent: '#FF8FB8'}
+  },
+
+  cyber: {
+    name: '⚡ Cyber Neon',
+    dark: {bg: '#0a0f16', panel: '#182331', accent: '#00F5FF'},
+    light: {bg: '#effdff', panel: '#ffffff', accent: '#00F5FF'}
+  },
+
+  galaxy: {
+    name: '🌌 Galaxy',
+    dark: {bg: '#110f1d', panel: '#221d38', accent: '#7B61FF'},
+    light: {bg: '#f4f2ff', panel: '#ffffff', accent: '#7B61FF'}
+  },
+
+  mint: {
+    name: '🍃 Mint',
+    dark: {bg: '#0e1715', panel: '#1c2d28', accent: '#52E5C3'},
+    light: {bg: '#effff9', panel: '#ffffff', accent: '#52E5C3'}
+  },
+
+  rosegold: {
+    name: '🌹 Rose Gold',
+    dark: {bg: '#1a1212', panel: '#2f2323', accent: '#E8A6A1'},
+    light: {bg: '#fff6f5', panel: '#ffffff', accent: '#E8A6A1'}
+  }
 }; // <--- Đã thêm dấu đóng cho object 'themes'
 
 // 1. Hàm đổ danh sách theme vào dropdown
